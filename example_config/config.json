@@ -1,0 +1,18 @@
+{
+    "discord_token": "",
+    "admin_id": "",
+
+    "coin_ticker": "XWP",
+    "redis_prefix": "XWP",
+    "coin_unit": 12,
+    "displayed_decimal": 8,
+
+    "mixin": 10,
+    "transfer_fee": 1000000000,
+    "wallet_rpc_port": 18950,
+    "redis_rpc_port": 6379,
+
+    "faucet_min_reward": 1000000000,
+    "faucet_max_reward": 1000000000000,
+    "faucet_time_inteval": 3840
+}

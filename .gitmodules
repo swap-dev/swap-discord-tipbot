@@ -1,0 +1,9 @@
+[submodule "extern/curlcpp"]
+	path = extern/curlcpp
+	url = https://github.com/JosephP91/curlcpp
+[submodule "extern/sleepy-discord"]
+	path = extern/sleepy-discord
+	url = https://github.com/yourWaifu/sleepy-discord
+[submodule "extern/redox"]
+	path = extern/redox
+	url = https://github.com/hmartiro/redox
