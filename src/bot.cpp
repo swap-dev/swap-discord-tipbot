@@ -291,7 +291,7 @@ void Bot::onMessage(SleepyDiscord::Message message)
             int64_t userLastFaucetTake = std::stoll(mRedisConnection.commandSync<std::string>({"HGET", mRedisPrefix + userID, "lastFaucetTake"}).reply());
             int64_t currentHeight = mWalletApi.getBlockHeight();
 
-            if (currentHeight > mBotConfig.faucetTimeInteval + userLastFaucetTake)
+            if (currentHeight >= mBotConfig.faucetTimeInteval + userLastFaucetTake)
             {
                 std::random_device rd;
                 std::default_random_engine generator(rd());
