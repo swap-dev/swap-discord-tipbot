@@ -64,7 +64,7 @@ void Bot::onMessage(SleepyDiscord::Message message)
         {
             sendMessage(message.channelID, "Current wallet height is " + std::to_string(mWalletApi.getBlockHeight()));
         }
-        else if (message.startsWith(".withdrawall"))
+        else if (message.startsWith(".withdrawall") || message.startsWith(".sweep_all"))
         {
             int64_t amount = getUnlockedBalance(userID);
 
@@ -111,10 +111,10 @@ void Bot::onMessage(SleepyDiscord::Message message)
             }
             else
             {
-                sendMessage(message.channelID, "Fromatting error. The correct format is: .withdrawall [address].");
+                sendMessage(message.channelID, "Formatting error. The correct format is: .sweep_all [address].");
             }
         }
-        else if (message.startsWith(".withdraw"))
+        else if (message.startsWith(".withdraw") || message.startsWith(".transfer"))
         {
             int64_t unlockedBalance = getUnlockedBalance(userID);
 
@@ -164,12 +164,12 @@ void Bot::onMessage(SleepyDiscord::Message message)
                 }
                 else
                 {
-                    sendMessage(message.channelID, "Fromatting error. The correct format is: .withdraw [address] [amount].");
+                    sendMessage(message.channelID, "Formatting error. The correct format is: .transfer [address] [amount].");
                 }
             }
             else
             {
-                sendMessage(message.channelID, "Fromatting error. The correct format is: .withdraw [address] [amount].");
+                sendMessage(message.channelID, "Formatting error. The correct format is: .transfer [address] [amount].");
             }
         }
         else if (message.startsWith(".giveall") || message.startsWith(".tipall"))
@@ -192,7 +192,7 @@ void Bot::onMessage(SleepyDiscord::Message message)
             }
             else
             {
-                sendMessage(message.channelID, "Fromatting error. The correct format is: .tipall [@username].");
+                sendMessage(message.channelID, "Formatting error. The correct format is: .tipall [@username].");
             }
         }
         else if (message.startsWith(".give") || message.startsWith(".tip") )
@@ -217,11 +217,14 @@ void Bot::onMessage(SleepyDiscord::Message message)
                             addUserBalance(targetUserID, amount);
                             totalAmount += amount;
 
-                            if (i < message.mentions.size() - 1)
+                            if (i < message.mentions.size() - 1 && message.mentions.size() == 2)
+                            {   targetDisplayString += message.mentions[i].username + " ";
+                            }
+                            else if (i < message.mentions.size() - 1)
                             {   targetDisplayString += message.mentions[i].username + ", ";
                             }
                             else
-                            {   targetDisplayString += " and " + message.mentions[i].username;
+                            {   targetDisplayString += "and " + message.mentions[i].username;
                             }
                         }
                         else
@@ -244,7 +247,7 @@ void Bot::onMessage(SleepyDiscord::Message message)
             }
             else
             {
-                sendMessage(message.channelID, "Fromatting error. The correct format is: .tip [@username] [amount].");
+                sendMessage(message.channelID, "Formatting error. The correct format is: .tip [@username] [amount].");
             }
         }
         else if (message.startsWith(".faucet"))
@@ -331,10 +334,10 @@ void Bot::onMessage(SleepyDiscord::Message message)
                 ".myaddress: display my deposit address.\\n"
                 ".balance: dispay my balance.\\n"
                 ".blockheight: display current wallet height.\\n"
-                ".withdraw [address] [amount]: withdraw amount from my account.\\n"
-                ".withdrawall [address]: withdraw everything my account.\\n"
-                ".give/.tip [@username] <@username2 @username3...> [amount]: tip amount to each @username(s).\\n"
-                ".giveall/.tipall [@username]: tip everything to @username.\\n"
+                ".transfer [address] [amount]: transfer amount from my account.\\n"
+                ".sweep_all [address]: transfer everything from my account.\\n"
+                ".tip [@username] <@username2 @username3...> [amount]: tip amount to each @username(s).\\n"
+                ".tipall [@username]: tip everything to @username.\\n"
                 ".faucet: show amount in faucet.\\n"
                 ".donate [amount]: donate amount to faucet.\\n"
                 ".donateall: donate everything to faucet.\\n"
