@@ -300,10 +300,11 @@ void Bot::onMessage(SleepyDiscord::Message message)
                 std::default_random_engine generator(rd());
                 std::uniform_int_distribution<long long unsigned> distribution(0,0xFFFFFFFFFFFFFFFF);
                 int64_t amount = distribution(generator) % (mBotConfig.faucetMaxReward - mBotConfig.faucetMinReward) + mBotConfig.faucetMinReward;
+                int64_t faucetBalance = getFaucetBalance();
 
-                if (amount > getFaucetBalance())
+                if (amount > faucetBalance)
                 {
-                    amount = getFaucetBalance();
+                    amount = faucetBalance;
                 }
 
                 if (amount == 0)
@@ -311,6 +312,20 @@ void Bot::onMessage(SleepyDiscord::Message message)
                 }
                 else if (amount < 0)
                 {   sendMessage(message.channelID, "Sorry, something went horribly wrong, and the faucet is bankrupt :scream:");
+                }
+
+                //Automatically reduce reward when balance is low
+                if (faucetBalance < 80 * pow(10, mBotConfig.coinUnit))
+                {   amount = amount / 2;
+                }
+                if (faucetBalance < 40 * pow(10, mBotConfig.coinUnit))
+                {   amount = amount / 2;
+                }
+                if (faucetBalance < 20 * pow(10, mBotConfig.coinUnit))
+                {   amount = amount / 2;
+                }
+                if (faucetBalance < 10 * pow(10, mBotConfig.coinUnit))
+                {   amount = amount / 2;
                 }
 
                 addFaucetBalance(-amount);
