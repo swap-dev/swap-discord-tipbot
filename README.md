@@ -11,7 +11,7 @@ Discord bot for Swap (https://swap.fyi), backed by a Redis database to reduce sy
 - Requires libhiredis-dev libev-dev libssl-dev
 ```
 sudo apt install libhiredis-dev libev-dev libssl-dev redis
-git clone --recursive https://github.com/LPHuynh/swap-discord-tipbot.git
+git clone --recursive https://github.com/swap-dev/swap-discord-tipbot.git
 cd swap-discord-tipbot
 mkdir build
 cd build
