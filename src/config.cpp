@@ -63,6 +63,9 @@ void Config::setConfig(std::string fileName)
     if (!botConfig["redis_rpc_port"].is_null())
     {   redisRpcPort = botConfig["redis_rpc_port"];
     }
+    if (!botConfig["faucet_channel"].is_null())
+    {   faucetChannel = botConfig["faucet_channel"];
+    }
     if (!botConfig["faucet_min_reward"].is_null())
     {   faucetMinReward = botConfig["faucet_min_reward"];
     }

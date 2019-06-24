@@ -37,6 +37,7 @@ public:
     uint16_t walletRpcPort;
     uint16_t redisRpcPort;
 
+    std::string faucetChannel;
     int64_t faucetMinReward;
     int64_t faucetMaxReward;
     int64_t faucetTimeInteval;

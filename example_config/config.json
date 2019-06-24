@@ -12,6 +12,7 @@
     "wallet_rpc_port": 18950,
     "redis_rpc_port": 6379,
 
+    "faucet_channel": "",
     "faucet_min_reward": 1000000000,
     "faucet_max_reward": 1000000000000,
     "faucet_time_inteval": 3840

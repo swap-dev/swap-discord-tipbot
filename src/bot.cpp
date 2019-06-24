@@ -15,6 +15,7 @@
 #include "bot.h"
 
 #include <iostream>
+#include <sstream>
 #include "json.hpp"
 
 void Bot::setSettings(const Config& botConfig)
@@ -291,53 +292,60 @@ void Bot::onMessage(SleepyDiscord::Message message)
         }
         else if (message.startsWith(".take"))
         {
-            int64_t userLastFaucetTake = std::stoll(mRedisConnection.commandSync<std::string>({"HGET", mRedisPrefix + userID, "lastFaucetTake"}).reply());
-            int64_t currentHeight = mWalletApi.getBlockHeight();
-
-            if (currentHeight >= mBotConfig.faucetTimeInteval + userLastFaucetTake)
+            if (message.channelID == mBotConfig.faucetChannel)
             {
-                std::random_device rd;
-                std::default_random_engine generator(rd());
-                std::uniform_int_distribution<long long unsigned> distribution(0,0xFFFFFFFFFFFFFFFF);
-                int64_t amount = distribution(generator) % (mBotConfig.faucetMaxReward - mBotConfig.faucetMinReward) + mBotConfig.faucetMinReward;
-                int64_t faucetBalance = getFaucetBalance();
+                int64_t userLastFaucetTake = std::stoll(mRedisConnection.commandSync<std::string>({"HGET", mRedisPrefix + userID, "lastFaucetTake"}).reply());
+                int64_t currentHeight = mWalletApi.getBlockHeight();
 
-                if (amount > faucetBalance)
+                if (currentHeight >= mBotConfig.faucetTimeInteval + userLastFaucetTake)
                 {
-                    amount = faucetBalance;
-                }
+                    std::random_device rd;
+                    std::default_random_engine generator(rd());
+                    std::uniform_int_distribution<long long unsigned> distribution(0,0xFFFFFFFFFFFFFFFF);
+                    int64_t amount = distribution(generator) % (mBotConfig.faucetMaxReward - mBotConfig.faucetMinReward) + mBotConfig.faucetMinReward;
+                    int64_t faucetBalance = getFaucetBalance();
 
-                if (amount == 0)
-                {   sendMessage(message.channelID, "Sorry, faucet is out of coins to give out.");
-                }
-                else if (amount < 0)
-                {   sendMessage(message.channelID, "Sorry, something went horribly wrong, and the faucet is bankrupt :scream:");
-                }
+                    if (amount > faucetBalance)
+                    {
+                        amount = faucetBalance;
+                    }
 
-                //Automatically reduce reward when balance is low
-                if (faucetBalance < 80 * pow(10, mBotConfig.coinUnit))
-                {   amount = amount / 2;
-                }
-                if (faucetBalance < 40 * pow(10, mBotConfig.coinUnit))
-                {   amount = amount / 2;
-                }
-                if (faucetBalance < 20 * pow(10, mBotConfig.coinUnit))
-                {   amount = amount / 2;
-                }
-                if (faucetBalance < 10 * pow(10, mBotConfig.coinUnit))
-                {   amount = amount / 2;
-                }
+                    if (amount == 0)
+                    {   sendMessage(message.channelID, "Sorry, faucet is out of coins to give out.");
+                    }
+                    else if (amount < 0)
+                    {   sendMessage(message.channelID, "Sorry, something went horribly wrong, and the faucet is bankrupt :scream:");
+                    }
 
-                addFaucetBalance(-amount);
-                addUserBalance(userID, amount);
-                mRedisConnection.commandSync<std::string>({"HSET", mRedisPrefix + userID, "lastFaucetTake", std::to_string(currentHeight)});
-                sendMessage(message.channelID, message.author.username + ", you have been granted " + formatCoin(amount) + ".\\n(faucet balance reduced to " + formatCoin(getFaucetBalance()) + ")");
+                    //Automatically reduce reward when balance is low
+                    if (faucetBalance < 80 * pow(10, mBotConfig.coinUnit))
+                    {   amount = amount / 2;
+                    }
+                    if (faucetBalance < 40 * pow(10, mBotConfig.coinUnit))
+                    {   amount = amount / 2;
+                    }
+                    if (faucetBalance < 20 * pow(10, mBotConfig.coinUnit))
+                    {   amount = amount / 2;
+                    }
+                    if (faucetBalance < 10 * pow(10, mBotConfig.coinUnit))
+                    {   amount = amount / 2;
+                    }
+
+                    addFaucetBalance(-amount);
+                    addUserBalance(userID, amount);
+                    mRedisConnection.commandSync<std::string>({"HSET", mRedisPrefix + userID, "lastFaucetTake", std::to_string(currentHeight)});
+                    sendMessage(message.channelID, message.author.username + ", you have been granted " + formatCoin(amount) + ".\\n(faucet balance reduced to " + formatCoin(getFaucetBalance()) + ")");
+                }
+                else
+                {
+                    int64_t delay = mBotConfig.faucetTimeInteval + userLastFaucetTake - currentHeight;
+                    sendMessage(message.channelID, "Too soon " + message.author.username + "! You need to wait " + std::to_string(delay) +
+                        " more blocks (approx. " + std::to_string((delay >> 2) / 60) + "h" + std::to_string((delay >> 2) % 60) + "m)");
+                }
             }
             else
             {
-                int64_t delay = mBotConfig.faucetTimeInteval + userLastFaucetTake - currentHeight;
-                sendMessage(message.channelID, "Too soon " + message.author.username + "! You need to wait " + std::to_string(delay) +
-                    " more blocks (approx. " + std::to_string((delay >> 2) / 60) + "h" + std::to_string((delay >> 2) % 60) + "m)");
+                sendMessage(message.channelID, "Please use #botspam-faucet for this command");
             }
         }
         else if (message.startsWith(".help"))
@@ -356,7 +364,7 @@ void Bot::onMessage(SleepyDiscord::Message message)
                 ".faucet: show amount in faucet.\\n"
                 ".donate [amount]: donate amount to faucet.\\n"
                 ".donateall: donate everything to faucet.\\n"
-                ".take: collect a random amount of coins from faucet.\\n"
+                ".take: collect a random amount of coins from faucet (#botspam-faucet only).\\n"
                 ".help: display this message.\\n"
                 ".sudo: run command as TIPBOT (Admin-only).\\n"
                 "```"
@@ -423,8 +431,9 @@ bool Bot::createNewRedisUser(const std::string& userID, const WalletApi::Wallet&
 
 std::string Bot::formatCoin (int64_t coin)
 {
-    coin = coin / pow(10, mBotConfig.coinUnit - mBotConfig.displayedDecimal);
-    return std::to_string((double)coin / pow(10, mBotConfig.displayedDecimal)) + " " + mBotConfig.coinTicker;
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(mBotConfig.displayedDecimal) << std::to_string(coin /  pow(10, mBotConfig.coinUnit));
+    return ss.str() + " " + mBotConfig.coinTicker;
 }
 
 std::vector<std::string> Bot::splitString(std::string text)
