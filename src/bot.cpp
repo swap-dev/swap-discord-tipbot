@@ -59,7 +59,7 @@ void Bot::onMessage(SleepyDiscord::Message message)
             //int64_t totalBalance = getTotalBalance(userID);
             int64_t unlockedBalance = getUnlockedBalance(userID);
 
-            sendMessage(message.channelID, message.author.username + ", you have " + formatCoin(unlockedBalance) + " in your TIPBOT wallet.");
+            sendMessage(message.channelID, message.author.username + ", you have " + formatCoin(unlockedBalance, false) + " in your TIPBOT wallet.");
         }
         else if (message.startsWith(".blockheight"))
         {
@@ -429,10 +429,17 @@ bool Bot::createNewRedisUser(const std::string& userID, const WalletApi::Wallet&
     return true;
 }
 
-std::string Bot::formatCoin (int64_t coin)
+std::string Bot::formatCoin (int64_t coin, bool isRounded)
 {
     std::stringstream ss;
-    ss << std::fixed << std::setprecision(mBotConfig.displayedDecimal) << std::to_string(coin /  pow(10, mBotConfig.coinUnit));
+    if (isRounded)
+    {
+      ss << std::fixed << std::setprecision(mBotConfig.displayedDecimal) << (coin * 1.0f /  pow(10, mBotConfig.coinUnit));
+    }
+    else
+    {
+      ss << std::fixed << std::setprecision(mBotConfig.coinUnit) << (coin * 1.0f /  pow(10, mBotConfig.coinUnit));
+    }
     return ss.str() + " " + mBotConfig.coinTicker;
 }
 

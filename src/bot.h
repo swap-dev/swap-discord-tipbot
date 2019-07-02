@@ -34,7 +34,7 @@ public:
     void onMessage(SleepyDiscord::Message message);
 
 private:
-    std::string formatCoin (int64_t coin);
+    std::string formatCoin (int64_t coin, bool isRounded = true);
     std::vector<std::string> splitString(std::string text);
     int64_t getFaucetBalance ();
     int64_t addFaucetBalance (int64_t coinAdded);
