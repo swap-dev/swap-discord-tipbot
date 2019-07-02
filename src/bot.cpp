@@ -86,7 +86,7 @@ void Bot::onMessage(SleepyDiscord::Message message)
                             addUserBalance (userID, -amount);
                             addFaucetBalance (-receipt.txFee);
 
-                            sendMessage(message.channelID, message.author.username + ", " + formatCoin(amount)+ " have been withdrawn from your TIPBOT wallet. txhash: <" + receipt.txHash + ">\\n"
+                            sendMessage(message.channelID, message.author.username + ", " + formatCoin(amount, false)+ " have been withdrawn from your TIPBOT wallet. txhash: <" + receipt.txHash + ">\\n"
                                 "(" + formatCoin(receipt.txFee) + " have been deducted from faucet to pay the tx fees)");
                         }
                         else
@@ -139,7 +139,7 @@ void Bot::onMessage(SleepyDiscord::Message message)
                                 addUserBalance (userID, -amount);
                                 addFaucetBalance (-receipt.txFee);
 
-                                sendMessage(message.channelID, message.author.username + ", " + formatCoin(amount)+ " have been withdrawn from your TIPBOT wallet. txhash: <" + receipt.txHash + ">\\n"
+                                sendMessage(message.channelID, message.author.username + ", " + formatCoin(amount, false)+ " have been withdrawn from your TIPBOT wallet. txhash: <" + receipt.txHash + ">\\n"
                                     "(" + formatCoin(receipt.txFee) + " have been deducted from faucet to pay the tx fees)");
                             }
                             else
