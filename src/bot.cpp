@@ -434,11 +434,11 @@ std::string Bot::formatCoin (int64_t coin, bool isRounded)
     std::stringstream ss;
     if (isRounded)
     {
-      ss << std::fixed << std::setprecision(mBotConfig.displayedDecimal) << (coin * 1.0f /  pow(10, mBotConfig.coinUnit));
+      ss << std::fixed << std::setprecision(mBotConfig.displayedDecimal) << (coin  /  pow(10, mBotConfig.coinUnit));
     }
     else
     {
-      ss << std::fixed << std::setprecision(mBotConfig.coinUnit) << (coin * 1.0f /  pow(10, mBotConfig.coinUnit));
+      ss << std::fixed << std::setprecision(mBotConfig.coinUnit) << (coin  /  pow(10, mBotConfig.coinUnit));
     }
     return ss.str() + " " + mBotConfig.coinTicker;
 }
