@@ -364,9 +364,12 @@ void Bot::onMessage(SleepyDiscord::Message message)
                 ".faucet: show amount in faucet.\\n"
                 ".donate [amount]: donate amount to faucet.\\n"
                 ".donateall: donate everything to faucet.\\n"
-                ".take: collect a random amount of coins from faucet (#botspam-faucet only).\\n"
+                ".take: collect a random amount of coins from faucet (#botspam-faucet only).\\n\\n"                
+                ".links: display useful links.\\n"
+                ".remotenode: display list of remote nodes.\\n"
+                ".explorer: display list of alternative block explorer.\\n"
+                ".miner: display list of Cuckaroo29S miners.\\n\\n"
                 ".help: display this message.\\n"
-                ".sudo: run command as TIPBOT (Admin-only).\\n"
                 "```"
             };
 
@@ -384,6 +387,74 @@ void Bot::onMessage(SleepyDiscord::Message message)
             {   sendMessage(message.channelID, "You're not my master!");
             }
         }
+        else if (message.startsWith(".links"))
+        {
+            std::string text
+            {
+                "Useful links:\\n"
+                "```"
+                "[Website]:\\n"
+                "   http://swap.fyi/\\n"
+                "[Project's Github]:\\n"
+                "   https://github.com/swap-dev\\n"
+                "[Block Explorer]:\\n" 
+                "   https://explorer.xwp.fyi\\n"
+                "[Mining Rental Service]:\\n"
+                "   https://www.miningrigrentals.com/rigs/cuckoocycle29swap\\n"
+                "[Pool List]:\\n"
+                "   https://miningpoolstats.stream/swap\\n"
+                "[Blockchain.raw]:\\n"
+                "    https://explorer2.xwp.fyi/swap/blockchain.raw (Updated hourly)\\n"
+                "    https://node.pocketwhale.info/swap_blockchain.raw (Updated daily)\\n"
+                "```"
+            };
+            sendMessage(message.channelID, text);
+        }
+        else if (message.startsWith(".remotenode"))
+        {
+            std::string text
+            {
+                "List of Remote Nodes:\\n"
+                "```"
+                "node.xwp.fyi:19950\\n"
+                "node.swap.fyi:19950\\n"
+                "58.185.155.109:19950\\n"
+                "node.bitkitten.xyz:18850\\n"
+                "```"
+            };
+            sendMessage(message.channelID, text);
+        }
+        else if (message.startsWith(".explorer"))
+        {
+            std::string text
+            {
+                "List of Alternative Block Explorers:\\n"
+                "```"
+                "https://explorer.xwp.fyi\\n"
+                "https://explorer2.xwp.fyi\\n"
+                "https://swap.majanetwork.com\\n"
+                "https://swap.coinscope.cc\\n"
+                "```"
+            };
+            sendMessage(message.channelID, text);
+        }
+        else if (message.startsWith(".miner"))
+        {
+            std::string text
+            {
+                "List of Cuckaroo29S Miners:\\n"
+                "```"
+                "Swap Reference Miner: https://github.com/swap-dev/SwapReferenceMiner/releases/latest\\n"
+                "GMiner: https://github.com/develsoftware/GMinerRelease/releases/latest\\n"
+                "Rainbow Miner: https://github.com/RainbowMiner/RainbowMiner/releases/latest\\n"
+                "GrinProMiner: https://github.com/mozkomor/GrinProMiner/releases/latest\\n"
+                "NBMiner: https://github.com/NebuTech/NBMiner/releases/latest\\n"
+                "Awesome Miner: https://www.awesomeminer.com\\n"
+                "```"
+            };
+            sendMessage(message.channelID, text);
+        }
+        
     }
     else
     {
