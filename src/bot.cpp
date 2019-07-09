@@ -390,7 +390,7 @@ void Bot::onMessage(SleepyDiscord::Message message)
             std::string text
             {
                 "Useful Links for Newcomers:\\n"
-                "[Website]: <http://swap.fyi>\\n"
+                "[Website]: <https://swap.fyi>\\n"
                 "[Project's Github]: <https://github.com/swap-dev>\\n"
                 "[Block Explorer]: <https://explorer.xwp.fyi>\\n"
                 "[Mining Rental Service]: <https://www.miningrigrentals.com/rigs/cuckoocycle29swap>\\n"
