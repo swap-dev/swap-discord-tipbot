@@ -365,7 +365,7 @@ void Bot::onMessage(SleepyDiscord::Message message)
                 ".donate [amount]: donate amount to faucet.\\n"
                 ".donateall: donate everything to faucet.\\n"
                 ".take: collect a random amount of coins from faucet (#botspam-faucet only).\\n\\n"                
-                ".links: display useful links.\\n"
+                ".welcome: display useful links for newcomers.\\n"
                 ".remotenode: display list of remote nodes.\\n"
                 ".explorer: display list of alternative block explorer.\\n"
                 ".miner: display list of Cuckaroo29S miners.\\n\\n"
@@ -387,30 +387,23 @@ void Bot::onMessage(SleepyDiscord::Message message)
             {   sendMessage(message.channelID, "You're not my master!");
             }
         }
-        else if (message.startsWith(".links"))
+        else if (message.startsWith(".links") || message.startsWith(".welcome"))
         {
             std::string text
             {
-                "Useful links:\\n"
-                "```"
-                "[Website]:\\n"
-                "   http://swap.fyi/\\n"
-                "[Project's Github]:\\n"
-                "   https://github.com/swap-dev\\n"
-                "[Block Explorer]:\\n" 
-                "   https://explorer.xwp.fyi\\n"
-                "[Mining Rental Service]:\\n"
-                "   https://www.miningrigrentals.com/rigs/cuckoocycle29swap\\n"
-                "[Pool List]:\\n"
-                "   https://miningpoolstats.stream/swap\\n"
+                "Useful Links for Newcomers:\\n"
+                "[Website]: <http://swap.fyi>\\n"
+                "[Project's Github]: <https://github.com/swap-dev>\\n"
+                "[Block Explorer]: <https://explorer.xwp.fyi>\\n"
+                "[Mining Rental Service]: <https://www.miningrigrentals.com/rigs/cuckoocycle29swap>\\n"
+                "[Pool List]: <https://miningpoolstats.stream/swap>\\n"
                 "[Blockchain.raw]:\\n"
-                "   https://explorer2.xwp.fyi/swap/blockchain.raw (Updated hourly)\\n"
-                "   https://node.pocketwhale.info/swap_blockchain.raw (Updated daily)\\n"
+                "   <https://explorer2.xwp.fyi/swap/blockchain.raw>\\n"
+                "   <https://node.pocketwhale.info/swap_blockchain.raw>\\n"
                 "[Exchanges]:\\n"
-                "   TradeOgre: https://tradeogre.com/exchange/BTC-XWP\\n"
-                "   Citex: https://www.citex.co.kr/#/trade/XWP_BTC\\n"
-                "   Graviex: https://graviex.net/markets/xwpbtc\\n"
-                "```"
+                "   <https://tradeogre.com/exchange/BTC-XWP>\\n"
+                "   <https://www.citex.co.kr/#/trade/XWP_BTC>\\n"
+                "   <https://graviex.net/markets/xwpbtc>\\n"
             };
             sendMessage(message.channelID, text);
         }
@@ -419,12 +412,10 @@ void Bot::onMessage(SleepyDiscord::Message message)
             std::string text
             {
                 "List of Remote Nodes:\\n"
-                "```"
-                "node.xwp.fyi:19950\\n"
-                "node.swap.fyi:19950\\n"
-                "58.185.155.109:19950\\n"
-                "node.bitkitten.xyz:18850\\n"
-                "```"
+                "    node.xwp.fyi:19950\\n"
+                "    node.swap.fyi:19950\\n"
+                "    58.185.155.109:19950\\n"
+                "    node.bitkitten.xyz:18850\\n"
             };
             sendMessage(message.channelID, text);
         }
@@ -433,12 +424,10 @@ void Bot::onMessage(SleepyDiscord::Message message)
             std::string text
             {
                 "List of Alternative Block Explorers:\\n"
-                "```"
-                "https://explorer.xwp.fyi\\n"
-                "https://explorer2.xwp.fyi\\n"
-                "https://swap.majanetwork.com\\n"
-                "https://swap.coinscope.cc\\n"
-                "```"
+                "<https://explorer.xwp.fyi>\\n"
+                "<https://explorer2.xwp.fyi>\\n"
+                "<https://swap.majanetwork.com>\\n"
+                "<https://swap.coinscope.cc>\\n"
             };
             sendMessage(message.channelID, text);
         }
@@ -447,18 +436,15 @@ void Bot::onMessage(SleepyDiscord::Message message)
             std::string text
             {
                 "List of Cuckaroo29S Miners:\\n"
-                "```"
-                "Swap Reference Miner: https://github.com/swap-dev/SwapReferenceMiner/releases/latest\\n"
-                "GMiner: https://github.com/develsoftware/GMinerRelease/releases/latest\\n"
-                "Rainbow Miner: https://github.com/RainbowMiner/RainbowMiner/releases/latest\\n"
-                "GrinProMiner: https://github.com/mozkomor/GrinProMiner/releases/latest\\n"
-                "NBMiner: https://github.com/NebuTech/NBMiner/releases/latest\\n"
-                "Awesome Miner: https://www.awesomeminer.com\\n"
-                "```"
+                "Swap Reference Miner: <https://github.com/swap-dev/SwapReferenceMiner/releases/latest>\\n"
+                "GMiner: <https://github.com/develsoftware/GMinerRelease/releases/latest>\\n"
+                "Rainbow Miner: <https://github.com/RainbowMiner/RainbowMiner/releases/latest>\\n"
+                "GrinProMiner: <https://github.com/mozkomor/GrinProMiner/releases/latest>\\n"
+                "NBMiner: <https://github.com/NebuTech/NBMiner/releases/latest>\\n"
+                "Awesome Miner: <https://www.awesomeminer.com>\\n"
             };
             sendMessage(message.channelID, text);
         }
-        
     }
     else
     {
