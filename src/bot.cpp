@@ -354,6 +354,7 @@ void Bot::onMessage(SleepyDiscord::Message message)
             {
                 "Swap TipBot Mk.II Commands:\\n"
                 "```"
+                ".welcome: display useful links for newcomers.\\n"
                 ".myaddress: display my deposit address.\\n"
                 ".balance: dispay my balance.\\n"
                 ".blockheight: display current wallet height.\\n"
@@ -364,11 +365,8 @@ void Bot::onMessage(SleepyDiscord::Message message)
                 ".faucet: show amount in faucet.\\n"
                 ".donate [amount]: donate amount to faucet.\\n"
                 ".donateall: donate everything to faucet.\\n"
-                ".take: collect a random amount of coins from faucet (#botspam-faucet only).\\n\\n"                
-                ".welcome: display useful links for newcomers.\\n"
-                ".remotenode: display list of remote nodes.\\n"
-                ".explorer: display list of alternative block explorer.\\n"
-                ".miner: display list of Cuckaroo29S miners.\\n\\n"
+                ".take: collect a random amount of coins from faucet (#botspam-faucet only).\\n"
+
                 ".help: display this message.\\n"
                 "```"
             };
@@ -404,44 +402,18 @@ void Bot::onMessage(SleepyDiscord::Message message)
                 "   <https://tradeogre.com/exchange/BTC-XWP>\\n"
                 "   <https://www.citex.co.kr/#/trade/XWP_BTC>\\n"
                 "   <https://graviex.net/markets/xwpbtc>\\n"
-            };
-            sendMessage(message.channelID, text);
-        }
-        else if (message.startsWith(".remotenode"))
-        {
-            std::string text
-            {
-                "List of Remote Nodes:\\n"
+                "[Miners]:\\n"
+                "    Swap Reference Miner: <https://github.com/swap-dev/SwapReferenceMiner/releases/latest>\\n"
+                "    GMiner: <https://github.com/develsoftware/GMinerRelease/releases/latest>\\n"
+                "    Rainbow Miner: <https://github.com/RainbowMiner/RainbowMiner/releases/latest>\\n"
+                "    GrinProMiner: <https://github.com/mozkomor/GrinProMiner/releases/latest>\\n"
+                "    NBMiner: <https://github.com/NebuTech/NBMiner/releases/latest>\\n"
+                "    Awesome Miner: <https://www.awesomeminer.com>\\n"
+                "[Remote Nodes]:\\n"
                 "    node.xwp.fyi:19950\\n"
                 "    node.swap.fyi:19950\\n"
                 "    58.185.155.109:19950\\n"
                 "    node.bitkitten.xyz:18850\\n"
-            };
-            sendMessage(message.channelID, text);
-        }
-        else if (message.startsWith(".explorer"))
-        {
-            std::string text
-            {
-                "List of Alternative Block Explorers:\\n"
-                "<https://explorer.xwp.fyi>\\n"
-                "<https://explorer2.xwp.fyi>\\n"
-                "<https://swap.majanetwork.com>\\n"
-                "<https://swap.coinscope.cc>\\n"
-            };
-            sendMessage(message.channelID, text);
-        }
-        else if (message.startsWith(".miner"))
-        {
-            std::string text
-            {
-                "List of Cuckaroo29S Miners:\\n"
-                "Swap Reference Miner: <https://github.com/swap-dev/SwapReferenceMiner/releases/latest>\\n"
-                "GMiner: <https://github.com/develsoftware/GMinerRelease/releases/latest>\\n"
-                "Rainbow Miner: <https://github.com/RainbowMiner/RainbowMiner/releases/latest>\\n"
-                "GrinProMiner: <https://github.com/mozkomor/GrinProMiner/releases/latest>\\n"
-                "NBMiner: <https://github.com/NebuTech/NBMiner/releases/latest>\\n"
-                "Awesome Miner: <https://www.awesomeminer.com>\\n"
             };
             sendMessage(message.channelID, text);
         }
