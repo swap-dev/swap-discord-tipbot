@@ -407,7 +407,7 @@ void Bot::onMessage(SleepyDiscord::Message message)
                 "   https://explorer2.xwp.fyi/swap/blockchain.raw (Updated hourly)\\n"
                 "   https://node.pocketwhale.info/swap_blockchain.raw (Updated daily)\\n"
                 "[Exchanges]:\\n"
-                "   TradeOgre: https://tradeogre.com\exchange/BTC-XWP\\n"
+                "   TradeOgre: https://tradeogre.com/exchange/BTC-XWP\\n"
                 "   Citex: https://www.citex.co.kr/#/trade/XWP_BTC\\n"
                 "   Graviex: https://graviex.net/markets/xwpbtc\\n"
                 "```"
