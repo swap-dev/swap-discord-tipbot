@@ -348,31 +348,6 @@ void Bot::onMessage(SleepyDiscord::Message message)
                 sendMessage(message.channelID, "Please use #botspam-faucet for this command");
             }
         }
-        else if (message.startsWith(".help"))
-        {
-            std::string helpText
-            {
-                "Swap TipBot Mk.II Commands:\\n"
-                "```"
-                ".welcome: display useful links for newcomers.\\n"
-                ".myaddress: display my deposit address.\\n"
-                ".balance: dispay my balance.\\n"
-                ".blockheight: display current wallet height.\\n"
-                ".transfer [address] [amount]: transfer amount from my account.\\n"
-                ".sweep_all [address]: transfer everything from my account.\\n"
-                ".tip [@username] <@username2 @username3...> [amount]: tip amount to each @username(s).\\n"
-                ".tipall [@username]: tip everything to @username.\\n"
-                ".faucet: show amount in faucet.\\n"
-                ".donate [amount]: donate amount to faucet.\\n"
-                ".donateall: donate everything to faucet.\\n"
-                ".take: collect a random amount of coins from faucet (#botspam-faucet only).\\n"
-
-                ".help: display this message.\\n"
-                "```"
-            };
-
-            sendMessage(message.channelID, helpText);
-        }
         else if (message.startsWith(".sudo"))
         {
             if (userID == mBotConfig.adminID && message.content.npos > 6)
@@ -384,38 +359,6 @@ void Bot::onMessage(SleepyDiscord::Message message)
             else
             {   sendMessage(message.channelID, "You're not my master!");
             }
-        }
-        else if (message.startsWith(".links") || message.startsWith(".welcome"))
-        {
-            std::string text
-            {
-                "Useful Links for Newcomers:\\n"
-                "[Website]: <https://swap.fyi>\\n"
-                "[Project's Github]: <https://github.com/swap-dev>\\n"
-                "[Block Explorer]: <https://explorer.xwp.fyi>\\n"
-                "[Mining Rental Service]: <https://www.miningrigrentals.com/rigs/cuckoocycle29swap>\\n"
-                "[Pool List]: <https://miningpoolstats.stream/swap>\\n"
-                "[Blockchain.raw]:\\n"
-                "    <https://explorer2.xwp.fyi/swap/blockchain.raw>\\n"
-                "    <https://node.pocketwhale.info/swap_blockchain.raw>\\n"
-                "[Exchanges]:\\n"
-                "    <https://tradeogre.com/exchange/BTC-XWP>\\n"
-                "    <https://www.citex.co.kr/#/trade/XWP_BTC>\\n"
-                "    <https://graviex.net/markets/xwpbtc>\\n"
-                "[Miners]:\\n"
-                "    Swap Reference Miner: <https://github.com/swap-dev/SwapReferenceMiner/releases/latest>\\n"
-                "    GMiner: <https://github.com/develsoftware/GMinerRelease/releases/latest>\\n"
-                "    Rainbow Miner: <https://github.com/RainbowMiner/RainbowMiner/releases/latest>\\n"
-                "    Awesome Miner: <https://www.awesomeminer.com>\\n"
-                "    GrinProMiner: <https://github.com/mozkomor/GrinProMiner/releases/latest> (AMD only)\\n"
-                "    NBMiner: <https://github.com/NebuTech/NBMiner/releases/latest> (NVIDIA only)\\n"
-                "[Remote Nodes]:\\n"
-                "    node.xwp.fyi:19950\\n"
-                "    node.swap.fyi:19950\\n"
-                "    58.185.155.109:19950\\n"
-                "    node.bitkitten.xyz:18850\\n"
-            };
-            sendMessage(message.channelID, text);
         }
     }
     else
