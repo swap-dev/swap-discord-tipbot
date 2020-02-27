@@ -348,6 +348,29 @@ void Bot::onMessage(SleepyDiscord::Message message)
                 sendMessage(message.channelID, "Please use #botspam-faucet for this command");
             }
         }
+        else if (message.startsWith(".help"))
+        {
+            std::string helpText
+            {
+                "Swap TipBot Commands:\\n"
+                "```"
+                ".myaddress: display my deposit address.\\n"
+                ".balance: dispay my balance.\\n"
+                ".blockheight: display current wallet height.\\n"
+                ".transfer [address] [amount]: transfer amount from my account.\\n"
+                ".sweep_all [address]: transfer everything from my account.\\n"
+                ".tip [@username] <@username2 @username3...> [amount]: tip amount to each @username(s).\\n"
+                ".tipall [@username]: tip everything to @username.\\n"
+                ".faucet: show amount in faucet.\\n"
+                ".donate [amount]: donate amount to faucet.\\n"
+                ".donateall: donate everything to faucet.\\n"
+                ".take: collect a random amount of coins from faucet (#botspam-faucet only).\\n"
+
+                ".help: display this message.\\n"
+                "```"
+            };
+            sendMessage(message.channelID, helpText);
+        }
         else if (message.startsWith(".sudo"))
         {
             if (userID == mBotConfig.adminID && message.content.npos > 6)
