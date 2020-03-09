@@ -1,6 +1,6 @@
 # Swap Discord Tipbot
 
-Discord bot for Swap (https://swap.fyi), backed by a Redis database to reduce system resource and blockchain usages for small transactions.
+Discord bot for Swap (https://xwp.one), backed by a Redis database to reduce system resource and blockchain usages for small transactions.
 
 ## Authors
 
@@ -8,9 +8,9 @@ Discord bot for Swap (https://swap.fyi), backed by a Redis database to reduce sy
 
 ## Compiling
 
-- Requires libhiredis-dev libev-dev libssl-dev
+- Requires libhiredis-dev libev-dev libssl-dev libcurl-dev
 ```
-sudo apt install libhiredis-dev libev-dev libssl-dev redis
+sudo apt install libhiredis-dev libev-dev libssl-dev redis libcurl4-openssl-dev
 git clone --recursive https://github.com/swap-dev/swap-discord-tipbot.git
 cd swap-discord-tipbot
 mkdir build
