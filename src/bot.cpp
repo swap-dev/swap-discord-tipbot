@@ -383,6 +383,29 @@ void Bot::onMessage(SleepyDiscord::Message message)
             {   sendMessage(message.channelID, "You're not my master!");
             }
         }
+        else if (message.startsWith(".releasefromfaucet"))
+        {
+            if (userID == mBotConfig.adminID)
+            {
+                std::vector<std::string> messageArg = splitString(message.content);
+                int64_t amount = std::stold(messageArg.back()) * pow (10, mBotConfig.coinUnit);
+                
+                if (amount < getFaucetBalance())
+                {
+                    addFaucetBalance(-amount);
+                    addUserBalance(userID, amount);
+                    sendMessage(message.channelID, message.author.username + ", " + formatCoin(amount) + " have been withdrawn from faucet.\\n(faucet balance reduced to " + formatCoin(getFaucetBalance()) + ")");
+                }
+                else
+                {
+                    sendMessage(message.channelID, "Not enough coins in faucet. " + formatCoin(getFaucetBalance()) + " is currently available.");
+                }
+            }
+            else
+            {
+                sendMessage(message.channelID, "Admin privledge is required for this command.");
+            }
+        }
     }
     else
     {
