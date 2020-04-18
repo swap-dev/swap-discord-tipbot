@@ -403,7 +403,7 @@ void Bot::onMessage(SleepyDiscord::Message message)
             }
             else
             {
-                sendMessage(message.channelID, "Admin privledge is required for this command.");
+                sendMessage(message.channelID, "Admin privilege is required for this command.");
             }
         }
     }
