@@ -383,7 +383,7 @@ void Bot::onMessage(SleepyDiscord::Message message)
             {   sendMessage(message.channelID, "You're not my master!");
             }
         }
-        else if (message.startsWith(".releasefromfaucet"))
+        else if (message.startsWith(".release"))
         {
             if (userID == mBotConfig.adminID)
             {
